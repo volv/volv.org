@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Volv - Weather</title>
+  
+  
+  
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  
+  
+  
+</head>
+
+<body>
+
+  <div class="container text-center outercontainer">
+    <h1 class="title">Volv Zipline</h1>
+    <h3 class="title sub">Local Weather</h2>
+      
+      <div class="well main" style="width:90%; margin:auto;">
+        <ul class="list-inline topline">
+          <li class="icon">Icon</li>
+          <li class=" temp"data-toggle="tooltip" title="Convert">Temp</li>
+        </ul>
+        <ul class="list-inline bottomline">
+          <li class ="detailbox loc">Loc</li>
+          <li class ="detailbox sky">Sky</li>
+          <li class ="detailbox wind">Wind</li>
+        </ul>
+        <div id="citation"><cite><a href="http://www.icndb.com/">http://www.icndb.com/</a></cite></div>
+      </div>
+      <div id="error"></div>
+    </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-18264723-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+  </body>
+  </html>

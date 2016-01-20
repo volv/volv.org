@@ -1,0 +1,394 @@
+<html>
+<head>
+<title>Maze</title>
+<style>
+#wrapper {
+    margin: 0 auto;
+    width: 1450px;
+}
+
+#contentwrap {
+    width: 850px;
+    float: left;
+    margin: 0 auto;
+}
+
+#content {
+    background: #c0c0c0;
+    border-radius: 10px;
+    border: 1px solid blue;
+    margin: 5px;
+}
+
+#rightcolumnwrap {
+    width: 500px;
+    float: left;
+    margin: 0 auto;
+}
+
+#rightcolumn {
+    background: #c0c0c0;
+    border-radius: 10px;
+    border: 1px solid blue;
+    margin: 5px;
+}
+</style>
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body bgcolor="black">
+
+	<center>
+		
+		<div id="wrapper">
+        <div id="contentwrap">
+        <div id="content">
+           <p> <canvas id="myCanvas" width="800" height="800" style="border-width:2px;border-style:solid;border-color:blue;">No Support</canvas> </p>
+        </div>
+        </div>
+        <div id="rightcolumnwrap">
+        <div id="rightcolumn">
+            <p>
+				<form>
+					<input type="text" id="frameText" length=10 /><p />
+					<label for="chkClosed"><input type="checkbox" id = "chkClosed" onClick="showClosed = !showClosed; draw();"> closedList[]</label>
+					<label for="chkOpen"><input type="checkbox" id = "chkOpen" onClick="showOpen = !showOpen; draw();"> openList[]</label> 
+					<label for="chkPath"><input type="checkbox" id = "chkPath" checked onClick="showPath = !showPath; draw();"> path[]</label>
+					<p />
+					<input type="date" /><p />
+					<input type="color" /><p />
+					<input type="range" /><p />
+					<input type="file" /><p />
+					
+					<progress>Mog</progress><p />
+					<meter>Mog</meter><p />					
+					
+					<textarea rows=30 cols=50 id="debugText">Debug...</textarea><p />
+					<p />
+					<input type="button" value="Step..." style="width:300;" onClick="stepTo();">
+				</form>
+			</p>
+        </div>
+        </div>
+        </div>
+		
+	</center>
+	<script>
+	
+	
+		const FPS = 60;
+		
+		var i = 0;
+		var j = 0;
+		
+		playerX = 0;
+		playerY = 0;
+		
+		var curPos = 0;
+		var closedList = [];
+		path = [];
+		openList = [];
+		
+		var showOpen = false, showClosed = false, showPath = true;
+		
+		frameCount = 0;
+		
+		window.addEventListener('keydown', keydown, true);
+		
+		var map = [
+					["E","0","0","0","0","0","1","0","0","0"],
+					["0","0","0","0","0","0","1","0","1","0"],
+					["1","1","1","1","1","0","1","1","1","0"],
+					["0","0","0","0","0","0","1","0","0","0"],
+					["0","1","0","1","1","1","1","0","1","0"],
+					["0","1","0","0","0","0","0","0","0","0"],
+					["0","1","0","1","1","0","0","1","1","1"],
+					["0","1","0","1","1","0","0","0","0","0"],
+					["0","1","0","1","1","1","1","1","0","0"],
+					["0","1","0","1","1","0","0","0","0","X"]
+				];
+				
+		var map2 = [
+					["E","0","0","0","0","0","1","0","0","0"],
+					["0","0","0","0","0","0","1","0","1","0"],
+					["1","1","1","1","1","0","1","0","1","0"],
+					["0","0","0","0","0","0","1","0","1","0"],
+					["0","1","0","1","1","1","0","0","1","0"],
+					["0","1","0","0","0","0","0","0","1","0"],
+					["0","1","0","1","1","0","0","1","1","0"],
+					["0","1","0","1","1","0","0","1","0","0"],
+					["0","1","0","1","1","1","1","1","0","0"],
+					["0","1","0","1","1","0","0","0","0","X"]
+				];
+
+		init();
+		astar();
+		
+		function init() {
+			canvas = document.getElementById('myCanvas');
+			context = canvas.getContext('2d');
+			frameText = document.getElementById('frameText');
+			debugText = document.getElementById('debugText');
+			boxwidth = canvas.width / map[0].length;
+			boxheight = canvas.height / map.length;
+			draw();
+		}
+
+		function draw() {
+			context.lineWidth = 5;
+			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillRect(0,0,canvas.width,canvas.height);
+			
+			//i = down, j = across
+			for (i = 0; i < map.length; i++) {
+				for (j = 0; j < map[i].length; j++) {
+					
+					switch (map[i][j]){
+						case "0": // Empty Square
+						context.fillStyle = "#696969";
+						break;
+						case "1": // Wall
+						context.fillStyle = "blue";
+						break;
+						case "E": // Entry 
+						context.fillStyle = "#c0c0c0";
+						break;
+						case "X": // Exit
+						context.fillStyle = "green";
+						break;
+						default : context.fillStyle = "black";
+					}
+					
+					// Draw Background
+					context.fillRect(j*boxwidth, i*boxheight, boxwidth, boxheight);
+					
+					// Draw Player
+					if ((j == playerX) && (i == playerY)) {
+						context.fillStyle = "#009DFF";
+						context.fillRect(j*boxwidth+0.15*boxwidth, i*boxheight+0.15*boxheight, boxwidth*0.7, boxheight*0.7);
+					}
+					
+					if (showClosed) {
+						if (containsXY(i, j, closedList) != -1) {
+							context.strokeStyle = "#FF0000";
+							context.strokeRect(j*boxwidth, i*boxheight, boxwidth, boxheight);
+						}
+					}
+
+					if (showOpen) {					
+						if (containsXY(i, j, openList) != -1) {
+							context.strokeStyle = "#00FF00";
+							context.strokeRect(j*boxwidth, i*boxheight, boxwidth, boxheight);
+						}
+					}
+
+					if (showPath) {					
+						if (containsXY(i, j, path) != -1) {
+							context.fillStyle = "#00FF00";
+							context.fillRect(j*boxwidth+0.3*boxwidth, i*boxheight+0.3*boxheight, boxwidth*0.4, boxheight*0.4);
+						}
+					}
+					
+				}
+			}
+			
+			frameCount++;
+			frameText.value = frameCount;			
+			
+		}
+		
+		function keydown(e) {
+		
+			prevX = playerX; 
+			prevY = playerY;
+	
+			if (e.keyCode == 37) { //Left arrow
+				if (playerX > 0) {
+					playerX -= 1;
+				}
+				else {
+					playerX = 0;
+				}
+			}
+			
+			if (e.keyCode == 38) { //Up arrow
+				if (playerY > 0) {
+					playerY -= 1;
+				}
+				else {
+					playerY = 0;
+				}
+			}
+			
+			if (e.keyCode == 39) { //Right arrow
+				if (playerX < map[playerY].length-1) {
+					playerX += 1;
+				}
+				else {
+					playerX = map[playerY].length-1;
+				}
+			}
+
+			if (e.keyCode == 40) { //Down arrow
+				if (playerY < map.length-1) {
+					playerY += 1;
+				}
+				else {
+					playerY = map.length-1;
+				}
+			}
+			
+			if (map[playerY][playerX] == "1") {
+				//Hit a wall. So revert
+				playerX = prevX, playerY = prevY;
+			}
+			
+			if ((playerX != prevX) || (playerY != prevY)) {
+				//Only draw if something changed
+				draw();
+			}
+
+		}
+
+		function rndColor() {
+			return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+		}
+				
+		function timestamp() { return new Date().getTime(); };
+		
+		function writeMessage(mycontext, message, x, y){
+			initFont = mycontext.font;
+			initFillStyle = mycontext.fillStyle;
+			
+			context.font = "60pt Calibri";
+			mycontext.fillStyle = "white";
+			mycontext.fillText(message, x, y);
+			
+			mycontext.font = initFont;
+			mycontext.fillStyle = initFillStyle;
+		}
+
+		function astar() {
+		//For now - start = 0,0 End = 9,9
+			
+			var currentSquare;
+			var ignore = 0;
+			
+			//Add starting node to open list - FIXED. CHANGE
+			openList.push({ x: 0, y: 0, F: 0, G: 0, H: 0, parentX: 0, parentY: 0});
+			currentSquare = openList[0];
+			
+			while ( (currentSquare.x != 9) || (currentSquare.y != 9) ) { //Head Explodes. While not at x=9 OR not at y=9
+			
+				//Find Lowest F on openList push it to end of list ready to be popped
+				openList.sort( function (a,b) { return -(a.F-b.F) }); 
+				
+				//Switch it to the closed list.
+				currentSquare = openList.pop();
+				closedList.push(currentSquare);			
+				
+				// i = down, j = across
+				for (i = currentSquare.x - 1; i <= currentSquare.x + 1; i++) {
+					for (j = currentSquare.y - 1; j <= currentSquare.y + 1; j++) {
+				
+						if ((i < 0) || (i > map.length-1)) { ignore = 1; } //Ignore out of bounds i (Y axis)
+						else if ((j < 0) || (j > map[i].length-1)) { ignore = 1; } //Ignore out of bounds j (X axis)
+						else if (map[i][j] == "1") { ignore = 1; } //Ignore Walls
+						else if (containsXY(i, j, closedList) > -1) { ignore = 1; } //Already on closed list
+						else if (Math.abs(i-currentSquare.x) == 1 && Math.abs(j-currentSquare.y) == 1) { ignore = 1; } //Ignore Diagonals
+						
+						if (!ignore) { //For each square we are not ignoring
+							
+							var gToAdd = 0;
+							var h = 0;
+							var f = 0;
+							
+							if (Math.abs(i-currentSquare.x) == 1 && Math.abs(j-currentSquare.y) == 1) 
+								gToAdd = 14;
+							else 
+								gToAdd = 10;
+								
+							h = ((9-currentSquare.x) + (9-currentSquare.y)) * 10; // HardCoded target values - CHANGE
+							g = currentSquare.G + gToAdd; //G = parent square G + new G
+							f = g + h;
+							
+							if (containsXY(i, j, openList)==-1) { //If not on open list
+								openList.push({ x: i, y: j, F: f, G: g, H: h, parentX: currentSquare.x, parentY: currentSquare.y });
+							}
+							else { //Already on list. recalculate G's and adjust parent if required
+								if (g >= openList[containsXY(i, j, openList)].G) {	//if g to square going through current square is less than previous g to square
+									openList[containsXY(i, j, openList)].G = g; // Fix G
+									openList[containsXY(i, j, openList)].F = openList[containsXY(i, j, openList)].H + g; // Fix F				
+									openList[containsXY(i, j, openList)].parentX = currentSquare.parentX;
+									openList[containsXY(i, j, openList)].parentY = currentSquare.parentY;
+								}
+							}
+							
+						}	
+							
+						ignore = 0;
+					
+					}
+				} // End Loop
+
+			} // End While
+			
+			curPath = closedList.pop();
+							
+			do {
+				path.push(curPath);	//Add End to path
+				if ( containsXY(curPath.parentX, curPath.parentY, closedList) != -1) {
+					curPath = closedList[containsXY(curPath.parentX, curPath.parentY, closedList)];
+				}
+			} while ((curPath.x != 0) || (curPath.y != 0)); //Explodes
+			
+			path.push({ x: 0, y: 0, F: 0, G: 0, H: 0, parentX: 0, parentY: 0});
+
+			path.reverse();
+			
+			draw();
+			
+			debugText.value += "\nopenList.length = " + openList.length;
+			debugText.value += "\nclosedList.length = " + closedList.length;
+			debugText.value += "\npath.length = " + path.length;
+			debugText.scrollTop = debugText.scrollHeight;		
+	
+			for (var feck = 0; feck <= closedList.length; feck++) {
+				debugText.value += "\n" +closedList[feck];
+				l = ''; for (m in closedList[feck]) { l += m + ' => ' + closedList[feck][m] + '\n' } debugText.value += "\n" + l;
+			}
+			
+		}
+		
+		function containsXY(x, y, sList) {
+			for (var mog = 0; mog < sList.length; mog++) {
+				if ((sList[mog].x == x) && (sList[mog].y == y)) {
+					return mog;
+				}
+			}
+			return -1;
+		}
+		
+		function stepTo() {
+			playerX = path[curPos].y;
+			playerY = path[curPos].x;
+			curPos++;		
+			draw();	
+			if (curPos == path.length) { curPos=0; }			
+		}
+	
+	</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

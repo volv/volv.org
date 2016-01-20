@@ -1,0 +1,81 @@
+<html>
+	<head>
+		<title>AZ23: Well I think it looks OK anyways</title>
+		<link rel="shortcut icon" href="im/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="default.css">
+		<script src="js/functions.js"></script>
+	</head>
+	<body>
+			<div id="wrapper">
+	
+				<div class="header">
+					<span id="az23">az23<span id="random">Why does everything have to be a video? skim reading FTW!
+</span></span>
+				</div>
+					
+					
+					<div class ="nav">
+						<a href="index.php?p=bj">
+							<img class="navlink" src="im/bj.png" title="Blackjack" alt="Blackjack">
+						</a>
+					</div>
+				
+				
+				<div class ="left">
+					<h1>Stuff I Like</h1>
+					<a href ="http://xkcd.com">
+						<img class ="likelink" src="im/xkcd.png" title="xkcd" alt="xkcd"><br/>
+					</a>
+					<a href="http://volv.org">							
+							<img class="likelink" src="im/volv2.gif" title="volv.org" alt="volv.org"><br/>
+						</a>
+					
+					<a href="https://www.ironmaiden.com/" title="Iron Maiden" alt="Iron Maiden">
+						
+						<img class="likelink" src="im/irons.png"><br/>
+						
+					</a>
+				</div>
+	
+				<div class ="main">
+					<!--Begin include for login form -->
+<h3 class='leftfoot'>Logged in as volv</h3><h3 class='rightfoot'><a href='logout.php'>Logout</a></h3><!--End include for login form -->
+<!--Begin include for signup form -->
+<!--End include for signup form -->Displaying posts 1 to 5 of 17
+<div class='news1'><h2>17/11/2015 21:31:27<h1>Top Tip:</h1></h2><br/>Drivers, for that authentic rally car straight cut gear whine, drive everywhere in reverse.
+</div>
+<div class='news2'><h2>08/11/2015 00:42:00<h1>Ad blocking</h1></h2><br/>Holy shit, I disabled adblock, how do you people even internet?
+</div>
+<div class='news1'><h2>03/11/2015 11:10:24<h1>Wasn't me</h1></h2><br/>DB server was down, no idea how long for but that's cheap hosting for you.
+</div>
+<div class='news2'><h2>27/10/2015 09:48:31<h1>Steam</h1></h2><br/>Remember when Steam was shit, when we all just wanted to play HL2 but were forced to install that POS? Here's the thing, it didnt get better, still takes longer to load than Windows, randomly decides it can't connect and generally sits there like the putrefying bloated corpse it is. The built in web browser is slower than IE6.
+</div>
+<div class='news1'><h2>24/10/2015 15:55:07<h1>Zoom - Zoom</h1></h2><br/>Most of the scaling issues should be fixed, well at least in chrome&FF anyways with the added bonus of not looking like a pile of shit on mobile.
+</div><br/><a href='http://www.az23.co.uk/index.php?p=1'>Next</a>				</div>
+				
+				
+					<div class ="leftfoot">
+						&copy;az23 2015, Opinions expressed here are just that:
+						opinions, which I may or may not even hold, and may or may not be laced with sarcasm.
+						These are just words, and no offense is intended, but these days people get arrested for telling jokes
+						on twitter because feelings are more important than fundamental human rights.  So please remember: you are
+						not offended by my words, but by your own interpretation of my words.
+					</div>
+					<div class="rightfoot">
+						<span id="vcenter">Made using </span> 
+						<a href="http://php.net/">
+							<img class="iused" src="im/phplogo.png" alt="PHP: Hypertext Preprocessor" title="PHP: Hypertext Preprocessor"/>
+						</a>
+						<a href="https://www.mysql.com/">
+							<img class="iused" src="im/mysqllogo.png" alt="MySQL" title="MySQL"/>
+						</a>
+						<a href="https://notepad-plus-plus.org/">
+							<img class="iused" src="im/npplogo.png" alt="Notepad++" title="Notepad++"/>
+						</a>
+						<a href="http://www.gimp.org/">
+							<img class="iused" src="im/gimp.png" alt="Gnu Image Manipulation Program" title="Gnu Image Manipulation Program">
+						</a>
+					</div>
+			</div>
+	</body>
+</html>

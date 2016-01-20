@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Pomodoro - Volv.org</title>
+    
+    
+    
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+<h1 class="text-center">Pomodoro</h1>
+
+<div class="container controlcon">
+
+  <div class="row">
+
+    <div class="col-md-5 but">
+
+      <p class="controlTitle">Break Length</p>
+
+      <p class="timerControl">
+        <span id="breakMinus" class="timerChange">-</span>
+        <span id="breakTime" class="timerNum">1</span>
+        <span id="breakPlus" class="timerChange">+</span>
+      </p>
+
+
+    </div>
+
+    <div class="col-md-2"><button class="btn btn-danger" id="resetTimer" style="height:100">Reset</button></div>
+
+    <div class="col-md-5 but">
+
+      <p class="controlTitle">Session Length</p>
+
+      <p class="timerControl">
+        <span id="sessionMinus" class="timerChange">-</span>
+        <span id="sessionTime" class="timerNum">1</span>
+        <span id="sessionPlus" class="timerChange">+</span>
+      </p>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container timercon">
+  <div class="timer greenBack">
+    <p class="promptDisplay">Start</p>
+    <p class="timeDisplay">0:00</p>
+    <p class="sessionDisplay">Start</p>
+  </div>
+</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+      <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+    
+    
+  </body>
+</html>

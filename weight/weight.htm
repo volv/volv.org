@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="canvasjs.min.js"></script>
+    <script type="text/javascript" src="weightdata.js"></script>
+    <script type="text/javascript">
+    /*global CanvasJS, series1, series2*/
+    window.onload = function () {
+        "use strict";
+        var chart = new CanvasJS.Chart("chartContainer"),
+            chart2 = new CanvasJS.Chart("chartContainer2");
+
+        chart.options.axisY = { 
+                suffix: " Kg",
+                gridColor: "lightblue",
+                gridThickness: 2,
+                interval: 5,
+                interlacedColor: "#F0F8FF",
+                includeZero: false
+        };
+      
+        chart.options.title = { text: "Weight" };
+        chart.options.zoomEnabled = true;
+        chart.options.panEnabled = true;
+        chart.options.exportEnabled = true;
+        chart.options.exportFileName = "VolvWeight";
+
+        chart.options.toolTip = {
+          content: function(e){
+            var content;
+            content = "<strong><font color='#369ead'>" + e.entries[0].dataPoint.x.toDateString() + "</font><br /> \
+            " + (e.entries[0].dataPoint.y).toFixed(1) + " kg<br /> \
+            " + (e.entries[0].dataPoint.y*2.20462262).toFixed(1) + " Pounds<br /> \
+            " + ((e.entries[0].dataPoint.y*2.20462262)/14).toFixed(2) + " Stone<br /> \
+            " + ((e.entries[0].dataPoint.y)/(1.8*1.8)).toFixed(2) + " BMI</strong>";
+            return content;
+          }
+        };
+
+        chart.options.data = [];
+        chart.options.data.push(series1);
+
+        ///// -------------- Chart 2
+
+        chart2.options.axisY = { 
+                gridColor: "lightred",
+                gridThickness: 2,
+                interval: 2,
+                title: "mmol/L",
+                includeZero: false,
+
+                stripLines:[
+                  {
+                    startValue:4.0,
+                    endValue:7.0,                
+                    color:"#A2FF9F"
+                  }
+                ]
+
+        };
+      
+        chart2.options.title = { text: "Blood" };
+        chart2.options.zoomEnabled = true;
+        chart2.options.panEnabled = true;
+        chart2.options.exportEnabled = true;
+        chart2.options.exportFileName = "VolvBlood";
+
+        chart2.options.toolTip = {
+          content: function(e){
+            var content;
+            content = "<strong><font color='#ff0000'>" + e.entries[0].dataPoint.x.toDateString() + "</font><br /> \
+            " + (e.entries[0].dataPoint.y).toFixed(1) + " mmol/L<br /> \
+            " + (e.entries[0].dataPoint.y*18.0182).toFixed(1) + " mg/dl</strong>";
+            return content;
+          }
+        };
+
+        chart2.options.data = [];
+        chart2.options.data.push(series2);
+
+        // var series1 = { //dataSeries - first quarter
+        //     type: "line",
+        // };
+
+        // var series2 = { 
+        //     type: "line",
+        //     color: "#ff0000"
+        // };
+
+        chart.render();
+        chart2.render();
+    };
+    </script>
+
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+
+    <title>Volv - Weight</title>
+
+</head>
+
+<body>
+
+    <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 400px; width: 100%;"></div>
+    <a href="weightdata.htm"><img src="../volv.gif" alt="Volv" /></a>
+
+    <script>
+    /* jshint ignore:start */
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-18264723-1', 'auto');
+      ga('send', 'pageview');
+    /* jshint ignore:end */
+    </script>
+
+</body>
+</html>

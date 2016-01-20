@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>Flock</title>
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body bgcolor="black">
+
+	<center>
+	<canvas id="myCanvas" width="800" height="700">No Support</canvas>
+	</center>
+	
+	<script>
+	
+		mouseX = mouseY =250;
+
+		canvas = document.getElementById('myCanvas');
+		context = canvas.getContext('2d');
+		
+		canvas.addEventListener('mousemove', mousemove, false);
+		canvas.addEventListener('click', clickHappened, false);
+		
+		function box() {
+			this.x = rndNo(myCanvas.width);
+			this.y = rndNo(myCanvas.height);
+			this.color = rndColor();
+			this.dx = 10 - rndNo(5);
+			this.dy = 10 - rndNo(5);
+			
+			this.update = function () {
+				this.x += this.dx;
+				this.y += this.dy;
+				
+				if (this.dx > 5) { this.dx = 5 }
+				if (this.dx < -5) { this.dx = -5 }
+				if (this.dy > 5) { this.dy = 5 }
+				if (this.dy < -5) { this.dy = -5 }
+				
+				if (this.x < 0) { this.x = 1; this.dx *= -1 }
+				if (this.y < 0) { this.y = 1; this.dy *= -1 }
+				if (this.x > myCanvas.width - 15) { this.x = myCanvas.width-16; this.dx *= -1 }
+				if (this.y > myCanvas.height - 15) { this.y = myCanvas.height-16; this.dy *= -1 }
+			}
+
+		}
+		
+		function rndColor() {
+			return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+		}
+		
+		function rndNo(range) {
+			return Math.random()*range;
+		}
+
+		function mousemove(e) {
+			mouseX = e.offsetX;
+			mouseY = e.offsetY;
+		}
+		
+		function clickHappened(e) {
+			mouseX = e.offsetX;
+			mouseY = e.offsetY;
+			alert(mouseX + ", " + mouseY);
+		}
+		
+		function writeMessage(mycontext, message, x, y){
+			initFont = mycontext.font;
+			initFillStyle = mycontext.fillStyle;
+			
+			context.font='25px Arial';
+			mycontext.fillStyle = "white";
+			mycontext.fillText(message, x, y);
+			
+			mycontext.font = initFont;
+			mycontext.fillStyle = initFillStyle;
+		}
+		
+		//function timestamp() { return new Date().getTime(); }
+		
+		function draw() {
+			context.fillStyle = "red";
+			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillRect(0,0,canvas.width,canvas.height);
+			
+			for (i = 0; i<10; i++) {
+				context.fillStyle = boxes[i].color;
+				context.fillRect(boxes[i].x, boxes[i].y, 15, 15);
+			}
+			
+			writeMessage(context, "ai() why u no work? - " + boxes[0].dx + ", " + boxes[0].dy, 10, canvas.height-10);
+		}
+		
+		function ai() {
+			for (i = 0; i<10; i++) {
+				if (mouseX < boxes[i].x) { boxes[i].dx -= Math.abs((boxes[i].dx * 0.1) + 1); }
+				if (mouseX > boxes[i].x) { boxes[i].dx += Math.abs((boxes[i].dx * 0.1) + 1); }
+				if (mouseY < boxes[i].y) { boxes[i].dy -= Math.abs((boxes[i].dy * 0.1) + 1); }
+				if (mouseY > boxes[i].y) { boxes[i].dy += Math.abs((boxes[i].dy * 0.1) + 1); }
+				boxes[i].update();
+			}
+
+			draw();
+			setTimeout(ai, 1);
+		}
+		
+		boxes = [];		
+		for (i = 0; i<100; i++) {
+			boxes[i] = new box();
+		}
+		
+		draw();
+		ai();
+	
+	</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

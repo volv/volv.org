@@ -1,0 +1,199 @@
+  body {
+    overflow-x: hidden;
+    /* bad */
+  }
+  
+  .container-fluid {
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    width: 100%;
+  }
+  
+  .jumbotron {
+    margin: -20px 0px 0px 0px;
+    padding-top: 5px;
+  }
+  
+  .navbar {
+    border-radius: 0px;
+    width: 100%;
+    z-index: 2147483647;
+    /* lolz */
+  }
+  
+  .portsection {
+    padding-top: 60px;
+    padding-bottom: 100px;
+    margin-top: -60px;
+  }
+  
+  #secHome {
+    background: url("http://volv.org/images/trans/arch.jpg") no-repeat center fixed;
+    background-size: cover;
+    height: 800px;
+    padding-top: 150px;
+  }
+  
+  #secAbout {
+    background: url("http://volv.org/images/trans/scottattoo.jpg") no-repeat center fixed;
+    background-size: cover;
+  }
+  
+  #secPortfolio {
+    background: url("http://volv.org/images/trans/london.jpg") no-repeat center fixed;
+    background-size: cover;
+    height: auto;
+  }
+  
+  #secContact {
+    background: url("http://volv.org/images/trans/sea.jpg") no-repeat center fixed;
+    background-size: cover;
+    height: 600px;
+  }
+  
+  #secContact .btn {
+    display: block;
+    margin: 0;
+  }
+  
+  .btn {
+    margin: 10px 15px 10px 15px;
+    border: solid;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 5px 5px 10px 1px #000000;
+    letter-spacing: 0px;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+  }
+  
+  .btn:hover {
+    margin: 10px 15px 10px 15px;
+    border: solid #000000;
+    background-color: black;
+    color: white;
+    letter-spacing: 2px;
+    box-shadow: 5px 5px 10px 1px #000000;
+  }
+  
+  .btn:focus {
+    margin: 10px 15px 10px 15px;
+    border: solid white;
+  
+  }
+  
+  p {
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    color: #1F1F1F;
+  }
+  
+  h1,
+  h2 {
+    text-align: center;
+    font-weight: 800;
+    font-family: "Impact";
+    font-family: 'Myriad', helvetica, arial, sans-serif;
+    text-shadow: 2px 3px 3px #292929;
+    letter-spacing: 2px;
+    text-stroke: 1px #c0c0c0;
+    -webkit-text-stroke: 1px #c0c0c0;
+    text-stroke: 1px #c0c0c0;
+  }
+  
+  h2.porthead {
+    margin: -10px 0px 0px 0px;
+    font-size: 42px;
+  }
+  
+  h3 {
+    text-align: center;
+    font-weight: 700;
+    color: black;
+  }
+  
+  .imgport {
+    border: solid;
+    margin-left: -50px !important;
+    box-shadow: 3px 3px 10px 5px #222222;
+    border-radius: 50%;
+  }
+  
+  .innerrow {
+    margin: 0px 10% 0px 10%;
+    width: 80%;
+  }
+  
+  .footer {
+    margin: 0px 20% 0px 20%;
+    padding: 20px 0px;
+    width: 60%;
+  }
+  
+  .footer li {
+    margin-left: -10px;
+  }
+  
+  .copyright {
+    font-size: smaller !important;
+    font-weight: normal !important;
+    margin-left: -10px;
+  }
+  
+  hr {
+    width: 80%;
+  }
+  
+  .projthumb {
+    margin-left: -30px;
+    border: solid 1px white;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+  }
+  
+  .projthumb:hover {
+    margin-left: -30px;
+    border: solid 1px white;
+    box-shadow: 0px 5px 10px 5px black;
+  }
+  
+  .projthumb p {
+    text-align: center;
+    height: 42px !important;
+    width: 90%;
+    margin: 0px 5%;
+    background-color: rgba(42, 42, 42, 0.9);
+    color: white;
+  }
+  
+  .projthumb p:nth-child(2) {
+    font-size: 20px !important;
+    padding-top: 15px;
+  }
+  
+  .projthumb p:nth-child(3) {
+    margin-top: -3px;
+    font-size: 16px !important;
+  }
+  
+  .projimg {
+    width: 90%;
+    margin: 0px 5%;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    cursor: pointer;
+  }
+  
+  .projimg:hover {
+    filter: grayscale(0%);
+    /* Firefox */
+    
+    -webkit-filter: grayscale(0%);
+    /* chrome */
+  }
+
+#secPortfolio h3 {
+  margin-left: -30px;
+}

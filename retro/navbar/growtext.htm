@@ -1,0 +1,145 @@
+<HTML>
+<HEAD><TITLE>Growing text</TITLE>
+</HEAD>
+
+<BODY onLoad="grow()">
+
+<SCRIPT SRC="nav1.js"></SCRIPT>
+<CENTER>
+<H1>Growing Banner</H1><FONT SIZE="2">with colour change</FONT>
+<HR>
+<CENTER>
+<SCRIPT LANGUAGE=JAVASCRIPT>
+//Created by Steven Bigham
+
+document.write("<DIV ID='growtext' style='font-size: 20; height: 90'><B><CENTER>Welcome to my web page</CENTER></B></DIV>")
+
+var size = 20;
+var col;
+function grow() {
+size += 1;
+if (size <= 55) {
+check()
+  setTimeout("grow()", 10)
+  }
+  else {
+  shrink()
+  }
+  }
+  function shrink() {
+  size -= 1;
+  if (size >= 20) {
+  check()
+  setTimeout("shrink()", 10)
+  }
+  else {
+  grow()
+  }
+  }
+  function change() {
+  var colo = new Array("blue","red","green","black","pink","purple","orange","cyan")
+  var ran = Math.round(Math.random()*7)
+  col = colo[ran]
+  setTimeout("change()", 500)
+  }
+  change()
+  
+  function check() {
+
+  growtext.style.fontSize = size
+  growtext.style.color = col
+  }
+   
+  
+  </SCRIPT>
+
+
+
+
+<HR><BR>
+<p style="font-weight: 700; font-size:larger">2015 edit -></p>
+<p>So I only had to change one thing to get this working 16 years later and that was the removal of the long redundant Navigator check.</p>
+<p>
+<code style="color:blue; text-align:left; display:inline-block;">
+  if (navigator.appName=="Netscape") {<br>
+    &nbsp;&nbsp;document.write("&lt;LAYER ID='growtext' style='font-size: 20'>&lt;/LAYER>")<br>
+    &nbsp;&nbsp;document.write("&lt;P>&lt;BR>&lt;P>&lt;BR>&lt;P>&lt;BR>&lt;P>&lt;BR>")&lt;/BR><br>
+  }<br>
+  else {<br>
+    &nbsp;&nbsp;blah<br>
+  }<br>
+</code>
+</p>
+<p>
+The rest remains in all of its glory.<br> Crazy Capitilisation.<br>Massive br and p tag abuse<br> nbsp spacing to allow sliding nav space. <br>Individual gifs for mouseover effect.<br> SOOOO much repitition and more.
+</p>
+<p style="font-weight: 700; font-size:larger">
+End 2015 edit.
+</p>
+This is the first script I developed for this javascript page.<BR>
+It is much shorter than others I have seen that are about 3 pages long. <BR>This one changes colour and I haven't seen any that do this<BR>Be sure to check the colour coding<BR><HR>
+</CENTER></CENTER>
+
+
+
+
+<P>
+&nbsp;&nbsp;&lt;BODY onLoad="change(); grow()"><P>
+&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=JAVASCRIPT><BR>
+&nbsp;&nbsp;//Created by Steven Bigham<BR>
+&nbsp;&nbsp;var size = <FONT COLOR="blue">20;</FONT><BR>
+&nbsp;&nbsp;function grow() {<BR>
+&nbsp;&nbsp;size += 1;<BR>
+&nbsp;&nbsp;if (size <= <FONT COLOR="red">55</FONT>) {<BR> 
+&nbsp;&nbsp;growtext.style.fontSize = size<BR>
+&nbsp;&nbsp;setTimeout("grow()", <FONT COLOR="green">10</FONT>)<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;else {<BR>
+&nbsp;&nbsp;shrink()<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;function shrink() {<BR>
+&nbsp;&nbsp;size -= 1;<BR>
+&nbsp;&nbsp;if (size >= <FONT COLOR="blue">20</FONT>) {<BR> 
+&nbsp;&nbsp;growtext.style.fontSize = size<BR>
+&nbsp;&nbsp;setTimeout("shrink()", <FONT COLOR="green">10</FONT>)<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;else {<BR>
+&nbsp;&nbsp;grow()<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;function change() {<BR>
+&nbsp;&nbsp;var col = new Array(<FONT COLOR="00B6FB">"blue","red","green","black","pink","purple","orange","cyan"</FONT>)<BR>
+&nbsp;&nbsp;var ran = Math.round(Math.random()*<FONT COLOR="gray">7</FONT>)<BR>
+&nbsp;&nbsp;growtext.style.color = col[ran]<BR>
+&nbsp;&nbsp;setTimeout("change()", <FONT COLOR="brown">500</FONT>)<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;&lt;/SCRIPT><P>
+&nbsp;&nbsp;&lt;CENTER>&lt;DIV ID="growtext" style="font-size: <FONT COLOR="blue">20;</FONT> height: 90">&lt;B><FONT COLOR="darkblue">Welcome to my web <BR>&nbsp;&nbsp;page</FONT>&lt;/B>&lt;/DIV>
+<P><HR>
+&nbsp;&nbsp;<IMG SRC="colour.jpg"><P>
+&nbsp;&nbsp;<FONT COLOR="blue">This is the starting size of the text you want to change</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="red">This is the biggest you want the text to become. <BR>
+&nbsp;&nbsp;If you have a moniter size less than 800x600 keep it at this number or less or it causes a unwanted<BR>&nbsp;&nbsp;effect. </FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="green">This is the speed you want the text to go in and out at, decrease for faster, increase for slower.</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="00B6FB">This is the colours you want the text to randomly change into, you can add more or take away <BR>&nbsp;&nbsp;some following the given pattern.</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="gray">This is the number of colours minus one</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="brown">This is the speed that the text will change colour at. Increase to make it go slower and decrease to<BR>&nbsp;&nbsp;make it go faster.</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="darkblue">This is the text you want to grow and shrink. It could be placed anywhere on your page.</FONT><BR>
+&nbsp;&nbsp;<HR>
+&nbsp;&nbsp;<IMG SRC="page.gif" onClick="location='index.htm'" onMouseOver="window.status = 'Back to main page'" onMouseOut="window.status=''">
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-18264723-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</BODY>
+</HTML>

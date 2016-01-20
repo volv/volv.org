@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Clicker</title>
+<link rel="stylesheet" type="text/css" href="interface.css" />
+<script type="text/javascript" src="main.js"></script>
+<script src="numeral.js"></script> <!-- Number Formatting -->
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+    
+<div id="leftpane">
+  Rate:
+  <br />
+  <span id="rate">0</span>
+</div>
+
+<div id="midpane">
+  <button onclick="cookies += 1">Click Me!</button>
+  <br />
+  <button onclick="cookies += 1000">+1000</button>
+  <br />
+  Cookies:
+  <br />
+  <span id="cookies">0</span>
+</div>
+
+<div id="rightpane">
+	<div id="cursor" class="item"
+        onclick="Game.Objects['cursor'].buy()" 
+    >
+    
+        <img src="cursor.png" id="imgCursor" width="28" height="40">
+
+        £<span id="cursorCost" class="itemcost">10</span><span id="cursorCount" class="itemcount">0</span>
+    
+    </div>
+    
+    <div id="two" class="item"
+        onclick="Game.Objects['cursor2'].buy()" 
+    >
+    
+        <img src="two.png" id="imgTwo" width="28" height="40">
+
+        £<span id="cursor2Cost" class="itemcost">100</span><span id="cursor2Count" class="itemcount">0</span>
+    
+    </div>
+    
+    <div id="three" class="item"
+        onclick="Game.Objects['cursor3'].buy()" 
+    >
+    
+        <img src="three.png" id="imgThree" width="28" height="40">
+
+        £<span id="cursor3Cost" class="itemcost">1000</span><span id="cursor3Count" class="itemcount">0</span>
+    
+    </div>
+    
+</div>
+
+<div id="footer">
+    <p>Footer!</p>
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

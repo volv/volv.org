@@ -1,0 +1,74 @@
+html,
+body {
+  height: 100%;
+  color: black;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-image: -webkit-linear-gradient(-28deg, #000 0%, rgb(26, 39, 105) 15%, rgb(62, 109, 171) 35%, rgb(26, 39, 105) 99%, rgb(26, 39, 105) 100%);
+  background-image: -moz-linear-gradient(-28deg, #000 0%, rgb(26, 39, 105) 15%, rgb(62, 109, 171) 35%, rgb(26, 39, 105) 99%, rgb(26, 39, 105) 100%);
+  background-image: -o-linear-gradient(-28deg, #000 0%, rgb(26, 39, 105) 15%, rgb(62, 109, 171) 35%, rgb(26, 39, 105) 99%, rgb(26, 39, 105) 100%);
+  background-image: -ms-linear-gradient(-28deg, #000 0%, rgb(26, 39, 105) 15%, rgb(62, 109, 171) 35%, rgb(26, 39, 105) 99%, rgb(26, 39, 105) 100%);
+  text-align: center;
+}
+
+h1 {
+  font-family: "Simsun";
+  font-weight: 900;
+  font-size: 50px;
+  color: black;
+  text-shadow: 3px 3px 7px black;
+}
+
+.btn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 10px 2px #000000;
+  border: solid black;
+  border-radius: 10px;
+  font-weight: 900;
+  background: rgba(1, 255, 255, .2);
+  transition: all .5s;
+  -webkit-transition: all .5s;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 1, .2);
+  box-shadow: 2px 2px 5px 2px #000000;
+}
+
+.btn:active {
+  background: #ffffff;
+  box-shadow: 2px 2px 5px 2px #000000;
+}
+
+.quote {
+  width: 50%;
+  margin: 20px 25%;
+  border-radius: 20px;
+  box-shadow: -10px 10px 30px 10px black;
+  border: solid;
+  padding: 20px 10px;
+  background: rgba(1, 255, 255, .2);
+}
+
+.quotetext {
+  font-size: larger;
+  font-weight: 700;
+}
+
+#twit {
+  width: 50%;
+  margin: -10px 25%;
+  text-align: right !important;
+}
+
+#citation {
+  width:50%;
+  margin-bottom: 0px;
+  margin-top: -20px;
+  margin-left: 25%; 
+  margin-right: 25%;
+  text-align:left;
+}

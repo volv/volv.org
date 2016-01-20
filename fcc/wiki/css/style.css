@@ -1,0 +1,103 @@
+html,
+body {
+  color: black;
+  height: 100%;
+}
+
+body {
+  background: rgba(20, 150, 255, .7);
+}
+
+.container, .container-fluid {
+  text-align: center;
+}
+
+.outer {
+  text-align: center;
+  position: relative;
+  top: 0%;
+}
+
+.jump {
+  top: 30%;
+}
+
+.searchbox {
+  outline-style: none;
+  background: rgba(20, 150, 255, .7);
+  height: 40px;
+  border: solid blue 5px;
+}
+
+.closed {
+  border-radius: 50%;
+  width: 40px;
+  cursor: pointer;
+}
+
+.opened {
+  padding-left: 10px;
+  padding-right: 35px;
+  border-radius: 20px;
+  width: 250px;
+}
+/* Search Tick */
+
+.tick {
+  content: "";
+  position: absolute;
+  height: 0px;
+  width: 25px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-bottom: solid 4px blue;
+  margin-top: 40px;
+  margin-left: -11px;
+}
+/* Cross */
+
+.cross {
+  color: blue;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  margin-top: 7px;
+  margin-left: -32px;
+  cursor: pointer;
+}
+
+#results {
+  width:80%;
+  margin:auto;
+}
+
+.result {
+  padding:10px;
+  text-align:left;
+  background: white;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 0px;
+  border-left: solid 5px rgba(0, 0, 0, 0);
+}
+
+.result:hover {
+  border-left: solid 5px blue;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.snippet {
+  font-size: 14px;
+}
+
+a,a:hover {
+  color:black;
+  text-decoration: none;
+}

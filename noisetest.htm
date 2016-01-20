@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>Noise</title>
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body bgcolor="#c0c0c0">
+
+	<center>
+	<canvas id="myCanvas" width="800" height="700">No Support</canvas><p />
+	<input id="slider" type = "range" width="80%" min="0" max="10" value="4" onchange="document.getElementById('rangevalue').innerHTML = document.getElementById('slider').value;draw();graph(canvas.width, canvas.height, context, document.getElementById('slider2').value);" />
+	<div id="rangevalue">4</div><br />
+	<input id="slider2" type = "range" width="80%" min="0" max="2" step= "0.1" value="0.5" onchange="document.getElementById('rangevalue2').innerHTML = document.getElementById('slider2').value;draw();graph(canvas.width, canvas.height, context, document.getElementById('slider2').value);" />
+	<div id="rangevalue2">0.5</div>
+	</center>
+	
+	<script>
+	
+		mouseX = mouseY = 0;
+
+		window.addEventListener('mousemove', mousemove, true);
+		window.addEventListener('click', mouseclick, true);
+
+		function timestamp() { return new Date().getTime(); };
+
+		canvas = document.getElementById('myCanvas');
+		context = canvas.getContext('2d');
+		
+		draw();
+			
+		function draw() {
+			context.fillStyle = "green";
+			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillRect(0,0,canvas.width,canvas.height);
+		}
+				
+		graph(canvas.width, canvas.height, context, 0.5);
+		
+		function graph(width, height, ctx, persistance) {
+		
+			i = document.getElementById('slider').value;
+		
+			freq = Math.pow(2, i);
+			amp = Math.pow(persistance,i);
+		
+			//f = 1 / 10 = 0.1
+			//w = 1 / 0.1 = 10
+			//Frequency = 1 / wavelength
+			//Wavelength = 1 / Frequency
+			
+			wavelength = 1.0 / freq;
+				
+			ctx.lineWidth = 1; 
+			ctx.strokeStyle = "rgb(255, 0, 0)";
+			
+			ctx.moveTo(0, noise(0));
+			ctx.beginPath();
+
+			for (i = 0; i <= freq; i++) {
+				
+				x = noise(i)*amp+1;
+				y = (x/2) * height;
+				y = height - y;
+				
+				ctx.lineTo(wavelength*i*width, y);
+			}
+
+			ctx.stroke();
+			
+			writeMessage(ctx, "i = " +(i-1)+ ", Frequency = " +freq+ ", Persistance = " + persistance 
+			+ ", Amplitude = " + amp, 10, canvas.height-10);
+		
+		}
+	
+		function noise(x) {
+			x = (x<<13) ^ x;
+			return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
+		}
+		
+		function rndColor() {
+			return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+		}
+
+		function mousemove(e) {
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+		}
+		
+		function mouseclick(e) {
+			e.preventDefault();
+		}
+		
+		function writeMessage(mycontext, message, x, y){
+			initFont = mycontext.font;
+			initFillStyle = mycontext.fillStyle;
+			
+			context.font='25px Arial';
+			mycontext.fillStyle = "white";
+			mycontext.fillText(message, x, y);
+			
+			mycontext.font = initFont;
+			mycontext.fillStyle = initFillStyle;
+		}
+	
+	</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

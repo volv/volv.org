@@ -1,0 +1,296 @@
+<html>
+<head>
+<title>Bouncy!</title>
+<style>
+body {
+    background: #000000;
+    text-align: center;
+}
+#wrapper {
+    margin: 0 auto;
+    width: 1450px;
+}
+#contentwrap {
+    width: 850px;
+    float: left;
+    margin: 0 auto;
+}
+#content {
+    background: #c0c0c0;
+    border-radius: 10px;
+    border: 1px solid blue;
+    margin: 5px;
+}
+#rightcolumnwrap {
+    width: 500px;
+    float: left;
+    margin: 0 auto;
+}
+#rightcolumn {
+    background: #c0c0c0;
+    border-radius: 10px;
+    border: 1px solid blue;
+    margin: 5px;
+}
+</style>
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+		
+		<div id="wrapper">
+        <div id="contentwrap">
+        <div id="content">
+           <p> <canvas id="myCanvas" width="800" height="800" style="border-width:2px;border-style:solid;border-color:blue;">No Support</canvas> </p>
+        </div>
+        </div>
+        <div id="rightcolumnwrap">
+        <div id="rightcolumn">
+            <p>
+				<form>
+                    Balls<br />
+					<p>Total Balls = <span id="ballTotal"></span></p>
+					<textarea rows=10 cols=50 id="debugText">Balls are red when in collision.  Right arrow key will add another ball. Left arrow removes last. Up and Down mess with speed</textarea><p />
+                    
+                    <img width="64" height="64" src="volv.gif" />
+                    
+				</form>
+			</p>
+        </div>
+        </div>
+        </div>
+
+	<script>	
+        var DIR = 1;
+		ballTotal = 20;
+        
+        document.getElementById('ballTotal').innerHTML = ballTotal;
+
+		canvas = document.getElementById('myCanvas');
+		context = canvas.getContext('2d');
+		
+		function writeMessage(mycontext, message, x, y){
+			initFont = mycontext.font;
+			initFillStyle = mycontext.fillStyle;
+			
+			context.font = "60pt Calibri";
+			mycontext.fillStyle = "white";
+			mycontext.fillText(message, x, y);
+			
+			mycontext.font = initFont;
+			mycontext.fillStyle = initFillStyle;
+		} //writeMessage
+        
+        window.addEventListener('keydown', keydown, true);
+        
+        function keydown(e) {
+            //console.log(e.keyCode);
+			if (e.keyCode == 39) { //Right arrow
+                generateCircle();
+                ballTotal = arrCircle.length;
+                document.getElementById('ballTotal').innerHTML = ballTotal;
+			}
+			
+			if (e.keyCode == 38) { //Up arrow
+                for (i = 0; i < arrCircle.length; i++) {
+                    arrCircle[i].speed += 1;
+                }
+			}
+			
+			if (e.keyCode == 37) { //Left arrow
+                arrCircle.pop();
+                ballTotal = arrCircle.length;
+                document.getElementById('ballTotal').innerHTML = ballTotal;
+			}
+
+			if (e.keyCode == 40) { //Down arrow
+                for (i = 0; i < arrCircle.length; i++) {
+                    arrCircle[i].speed -= 1;
+                }
+			} 
+			if (e.keyCode == 82) { //r
+                if (DIR == 1) { DIR = -1; } else { DIR = 1; }
+			}             
+        } //Keydown
+        
+        function rndColor() {
+			return "#" + ("00000" + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+		}
+        
+        function rndNo(range) { return Math.random()*range; }
+				
+		function timestamp() { return new Date().getTime(); }
+        
+        circle = function(x, y, radius, colour, speed, direction) {
+            this.x = x
+            this.y = y
+            this.radius = radius;
+            this.colour = colour;
+            this.speed = speed;
+            this.direction = direction * (Math.PI/180);
+            this.colliding = false;
+            this.initialColour = colour;
+            
+            this.draw = function(ctx) {
+                ctx.save(); //Remember Fill
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = this.colour;
+                ctx.fill();     
+                ctx.restore(); //Restore Fill
+            };
+            
+            this.checkWallCollision = function() {
+                if (this.x > canvas.width-this.radius) {
+                    this.direction *= -1;
+                    this.direction += Math.PI;
+                }
+                
+                if (this.x < this.radius) {
+                    this.direction *= -1;
+                    this.direction += Math.PI;
+                }
+                
+                if (this.y > canvas.height-this.radius) {
+                    this.direction *= -1;
+                }
+                
+                if (this.y < this.radius) {
+                    this.direction *= -1;
+                }
+            }
+            
+            this.checkCollision = function(circ) {
+                a = this.x - circ.x;
+                b = this.y - circ.y;
+                dist = (a*a)+(b*b);
+                if (dist < (this.radius + circ.radius)*(this.radius + circ.radius)) { 
+                    this.colliding = true; 
+                    circ.colliding = true; 
+                }
+            }
+            
+        }
+        
+        arrCircle = [];
+        
+        for (i=0; i<ballTotal; i++) {
+            generateCircle();
+        }
+        
+        function generateCircle() {
+            w = canvas.width;
+            h = canvas.height;
+            rndFill = rndColor();
+            rndDirection = rndNo(360);
+            rndSpeed = rndNo(100); //In pixels per second
+            rndRadius = rndNo(75);
+            rndX = rndRadius+1 + rndNo(w-2*(rndRadius+1));
+            rndY = rndRadius+1 + rndNo(h-2*(rndRadius+1));
+            arrCircle.push(new circle(rndX, rndY, rndRadius, rndFill, rndSpeed, rndDirection));      
+        }
+
+        function draw() {
+			context.fillStyle = "black";
+			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillRect(0,0,canvas.width,canvas.height);
+        
+            for (i=0; i<arrCircle.length; i++) {
+                arrCircle[i].draw(context);
+            }
+
+            //writeMessage(context, DIR, 400, 400);
+	
+		} //draw
+        
+        function doLogic() {
+
+            for (i=0; i<arrCircle.length; i++) {
+                     
+                arrCircle[i].checkWallCollision();
+                
+                for (j=i+1; j<arrCircle.length; j++) { //Every circle v every other circle. Except previously checked.
+                    arrCircle[i].checkCollision(arrCircle[j]);                
+                }
+             
+                if (arrCircle[i].colliding) {
+                    arrCircle[i].colour = "red";
+                }
+                else {
+                    arrCircle[i].colour = arrCircle[i].initialColour;
+                }
+                
+                arrCircle[i].colliding = false;
+                
+                arrCircle[i].x += Math.cos(arrCircle[i].direction) * arrCircle[i].speed * (timeSinceLastFrame/1000) *DIR;
+                arrCircle[i].y += Math.sin(arrCircle[i].direction) * arrCircle[i].speed * (timeSinceLastFrame/1000) *DIR;
+                
+                //if (arrCircle[i].speed-0.01 < 0) { arrCircle[i].speed = 0; } //Friction
+                //if (arrCircle[i].speed > 0) { arrCircle[i].speed -= .01; } //Friction
+                //if (arrCircle[i].y < canvas.height - arrCircle[i].radius+1) { arrCircle[i].y += .1; } //Gravity(ish)
+                                
+            }
+            
+
+                
+        }
+        
+      //  window.setInterval(function(){
+       //     doLogic();
+        //    draw();
+        //}, 1000/FPS);
+      
+	
+        var MAXIMUM_FRAME_RATE = 120;
+        var MINIMUM_FRAME_RATE = 15;
+        var UPDATE_INTERVAL = (1.0 / MAXIMUM_FRAME_RATE);
+        var MAX_CYCLES_PER_FRAME =(MAXIMUM_FRAME_RATE / MINIMUM_FRAME_RATE);
+        
+        var lastFrameTime = timestamp();
+        var cyclesLeftOver = 0.0;
+        var currentTime;
+        var timeSinceLastFrame;
+        var updateIterations;
+
+        function runGame() {
+          
+          currentTime = timestamp();
+          timeSinceLastFrame = currentTime - lastFrameTime;
+          updateIterations = ((timeSinceLastFrame) + cyclesLeftOver);
+          
+          if (updateIterations > (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL)) {
+            updateIterations = (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL);
+          }
+          
+          while (updateIterations > UPDATE_INTERVAL) {
+            updateIterations -= UPDATE_INTERVAL;
+            
+            doLogic(); /* Update game state a variable number of times */
+          }
+          
+          cyclesLeftOver = updateIterations;
+          lastFrameTime = currentTime;
+          
+          draw(); /* Draw the scene only once */
+        }
+    
+    
+        window.setInterval(function(){
+            runGame();
+        }, 1);
+    
+	</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

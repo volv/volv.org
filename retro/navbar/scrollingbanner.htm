@@ -1,0 +1,31 @@
+<SCRIPT>
+var str = "Welcome to my web page!!! The foremost infocenter on the web for all information on the sport of biking.   "
+var i = 0
+var front;
+var back;
+
+document.write('<DIV ID="slider"></DIV><BR>');
+
+
+function go() {
+if (i<=str.length) {
+i++
+front = str.substring(str.length, i)
+back = str.substring(0, i)
+setTimeout("go()", 50)
+check()
+}
+else {
+i = 0
+check()
+setTimeout("go()", 50)
+}
+}
+
+function check() {
+
+slider.innerHTML = "<CENTER><FONT SIZE='5' COLOR='blue'>" +front+back
+}
+
+go()
+</SCRIPT>

@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<title> STFU</title>
+		<body bgcolor="blue">
+		<h1 id="meh" align="center">meh</h1>
+		
+		<script type="text/javascript">
+				var red = 13;
+				var blu = 107;
+				var grn = 214;
+				var redv = 1;
+				var bluv = 1;
+				var grnv = 1;
+				
+				document.getElementById("meh").innerHTML = "Fucks sake man";
+				var meh = setInterval("doShit()",25);			
+				
+				function doShit(){
+					//increment or decrement the rgb values
+					//switch sign of vectors on 0 and 255
+					red += redv;
+					if( red >= 255){ 
+						redv = -32;
+						red = 255;
+					}
+					if(red <= 0){
+						redv = 32;
+						red = 0;
+					}
+					
+					blu += bluv;
+					if( blu >= 255){ 
+						bluv = -24;
+						blu =255;
+					}
+					if(blu >= 0){
+						bluv = 24;
+						blu = 0;
+					}
+					
+					grn += grnv;
+					if( grn >= 255){ 
+						grnv = -43;
+						grn = 255;
+					}
+					if(grn <= 0){
+						grnv = 43;
+						grn = 0;
+					}
+					//single hex digit seems to get treated as the most significant one
+					//fix with 0 padding
+					var rp = "";
+					if(red < 17){
+						rp ="0";
+					}
+					else{
+						rp ="";
+					}
+					
+					var gp = "";
+					if(grn < 17){
+						gp ="0";
+					}
+					else{
+						gp ="";
+					}
+					var bp = "";
+					if(blu < 17){
+						bp ="0";
+					}
+					else{
+						bp ="";
+					}
+					
+					document.getElementById("meh").innerHTML = '#'+ rp + red.toString(16) + gp + grn.toString(16) + bp + blu.toString(16);
+					document.bgColor = '#'+ rp + red.toString(16) + gp + grn.toString(16) + bp + blu.toString(16);
+				}
+				
+				
+			
+				
+			</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+			
+			</body>
+</html>
+	

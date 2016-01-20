@@ -1,0 +1,115 @@
+body {
+  background: #a0a0f0;
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Lobster', cursive;
+  font-size: 60px;
+  color:black;
+  margin-bottom:40px;
+}
+
+@media (max-width: 600px) {
+  .controlcon {
+    width:300px !important;
+  }
+}
+
+.controlcon {
+  text-align: center;
+  margin-top:0px;
+  margin-bottom:30px;
+  width:600px;
+  padding: 5px 50px; /* Here */
+}
+
+.but {
+  text-align: center;
+  padding: 5px 5px; /* Here */
+  background: #5a5a5a;
+  border: solid;
+  /* border-radius: 50%; */
+  box-shadow: 5px 5px 20px 5px black;
+}
+
+
+.timercon {
+  width:300px;
+  padding: 50px; /* Here */
+  background: #5a5a5a;
+  border: solid;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px 5px black;
+}
+.timercon:hover {
+  box-shadow: 0px 0px 10px 5px green;
+}
+.timercon:active {
+  box-shadow: 0px 0px 10px 5px white;
+}
+.redBack {
+    background: url("http://volv.org/images/red.png") no-repeat;
+}
+.greenBack {
+    background: url("http://volv.org/images/green.png") no-repeat;
+}
+.timer {
+  background-position: 0px 300px;
+  height:200px;
+  width:200px;
+  border-radius: 50%;
+  padding: 10px;
+}
+.timer:before {
+  content: "";
+  position:absolute;
+  margin: -18px; /* Magic */
+  height:216px;
+  width:216px;
+  border: 5px solid limegreen;
+  border-radius: 50%;
+}
+.promptDisplay {
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 0px;
+}
+.timeDisplay {
+  text-align: center;
+  color: black;
+  font-size: 50px;
+  font-weight: 700;
+  letter-spacing: 10px
+  padding-top: 0px;
+}
+.sessionDisplay {
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 0px;
+}
+
+.timerChange {
+  padding: 0px 10px;
+  font-size:40px;
+  cursor: pointer;
+}
+.timerChange:hover {
+  color: green;
+}
+.timerChange:active {
+  color: white;
+}
+.timerNum {
+  padding: 0px;
+  font-size:40px;
+}
+.controlTitle {
+  font-size:20px;
+  font-weight: bold;
+}

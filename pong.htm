@@ -1,0 +1,273 @@
+<html>
+<head>
+<title>Pong Test</title>
+<link rel="shortcut icon" href="favicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'volv.org');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body bgcolor="black">
+
+	<center>
+	<canvas id="myCanvas" width="800" height="700">No Support</canvas>
+	<font color="white">Pre-Alpha :)</font>
+    </center>
+	
+	<script>
+	
+		const XOFFSET = 50; const YOFFSET = 73; const GAMEWIDTH = 715; const GAMEHEIGHT = 614;
+	
+		const FPS = 60;
+		
+		var mouseX = 170;
+		var mouseY = 80;
+		var i = 1;
+		
+		var p1score;
+		var p2score;
+		
+		var p1offset = 0; //For showing score text nicely
+		var p2offset = 0;
+		
+		var playerX = 0;
+		var playerY = 0;
+		var compX = 700;
+		var compY = 0;
+		var ballX = (GAMEWIDTH / 2) -7.5;
+		var ballY = (GAMEHEIGHT / 2) -7.5;
+		var velX = 6;
+		var velY = 3;
+		var paddleDY = 0;
+		var compDY = 0;
+		var paddleSpeed = 7;
+		
+		var dstep = 0.01;
+        var dt = 0.0;
+		var dtx = 0.0;
+		var idt = 0.0;
+
+		window.addEventListener('mousemove', mousemove, true);
+		window.addEventListener('click', mouseclick, true);
+		window.addEventListener('keydown', keydown, true);
+		window.addEventListener('keyup', keyup, true);
+
+		function timestamp() { return new Date().getTime(); };
+
+		var start = timestamp();
+		var last = timestamp();
+		
+		init();
+		
+		function init() {
+			canvas = document.getElementById('myCanvas');
+			context = canvas.getContext('2d');
+			
+			p1score = 0;
+			p2score = 0;
+			
+			frame();
+			
+			//game();
+			//setTimeout(draw, 1000/FPS);
+		}
+
+
+		
+		function frame() {
+			start = timestamp();
+			game((start - last) / 1000.0);
+			draw();
+			last = start;
+			setTimeout(frame, 1);
+		}
+		
+		function game(idt) { 
+
+		    dt = dt + idt;
+
+			if (dt > dstep) {
+			
+				dt = dt - dstep;
+		
+				//Paddle Bounce
+				if ((ballY > playerY-7.5) && (ballY < playerY+107.5) && (ballX <= 22.5)) { ballX=23; velX *= -1; }
+			
+				//Player paddle movement
+				playerY += paddleDY;
+				
+				if (playerY < 0) { playerY = 0; }
+				if (playerY > GAMEHEIGHT-100) { playerY = GAMEHEIGHT - 100; }
+				
+				//Comp AI
+				if (compY+50 < ballY) { compDY = paddleSpeed; }
+				if (compY+50 > ballY) { compDY = -paddleSpeed; }
+				if (compY+50 == ballY) { compDY = 0; }
+				
+				compY += compDY;
+				
+				if (compY < 0) { compY = 0; }
+				if (compY > GAMEHEIGHT-100) { compY = GAMEHEIGHT - 100; }
+				
+				//Bouncy Ball		
+				if ((ballX + 15) > GAMEWIDTH) {
+					ballX = GAMEWIDTH-15;
+					velX *= -1;
+				}
+				if ((ballY + 15) > GAMEHEIGHT) {
+					ballY = GAMEHEIGHT-15;
+					velY *= -1;
+				}
+				if ((ballX - 15) < 0) {
+					//ballX = 15;
+					//velX *= -1;
+				}
+				if ((ballY - 15) < 0) {
+					ballY = 15;
+					velY *= -1;
+				}
+			
+				ballX += velX;			
+				ballY += velY;
+				
+				if (i < 9) {
+					p1offset = 40;
+					p2offset = 40;
+				}
+				else {
+					p1offset = 0;
+					p2offset = 0;
+				}
+
+				if (i < 99) {
+					i++
+				}
+				else {
+				i = 0;
+				p1offset = 40;
+				p2offset = 40;
+			}
+			
+			}
+			
+			//setTimeout(game, 10);
+		}
+
+		function draw() {
+			context.fillStyle = "green";
+			context.strokeStyle = "blue";
+			context.lineWidth = 5;
+			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			//context.fillRect(50,73,canvas.width-85,canvas.height-86);
+
+			roundedRect(context, 10, 70, canvas.width-20, canvas.height-80, 50);
+			
+			context.fillStyle="black";
+			context.fillRect(270, 40, 85, 60);
+			context.fillRect(440, 40, 85, 60);
+			
+			writeMessage(context, p1score, 270+p1offset, 95);
+			writeMessage(context, p2score, 440+p2offset, 95);
+			
+			drawPaddles(context);
+			drawBall(context);
+			
+			//onto real canvas
+			
+			//setTimeout(draw, 1000/FPS);
+		}
+		
+		function drawPaddles(context) {
+			context.fillStyle="white";
+			context.fillRect(playerX + XOFFSET, playerY +YOFFSET, 15, 100);
+			context.fillRect(compX + XOFFSET, compY +YOFFSET, 15, 100);
+		}
+		
+		function drawBall(context) {
+			context.lineWidth = 1;
+			context.strokeStyle = "white";
+			context.fillStyle="white";
+			context.beginPath();  
+			context.arc(ballX+XOFFSET, ballY+YOFFSET, 15,0,Math.PI*2,true);  
+			context.stroke();
+			context.fill();
+		}
+		
+		function roundedRect(ctx,x,y,width,height,radius){  
+		    ctx.beginPath();  
+		    ctx.moveTo(x,y+radius);  
+		    ctx.lineTo(x,y+height-radius);  
+			ctx.quadraticCurveTo(x,y+height,x+radius,y+height);  
+			ctx.lineTo(x+width-radius,y+height);  
+			ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);  
+			ctx.lineTo(x+width,y+radius);  
+			ctx.quadraticCurveTo(x+width,y,x+width-radius,y);  
+			ctx.lineTo(x+radius,y);  
+			ctx.quadraticCurveTo(x,y,x,y+radius);  
+			ctx.stroke();  
+		}  
+
+		function rndColor() {
+			return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+		}
+
+		function mousemove(e) {
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+		}
+		
+		function mouseclick(e) {
+			writeMessage(context, e.button);
+			e.preventDefault();
+		}
+		
+		function keydown(e) {
+			if (e.keyCode == 40) { //Down arrow
+				paddleDY = paddleSpeed;
+			}
+			
+			if (e.keyCode == 38) { //Up arrow
+				paddleDY = -paddleSpeed;
+			}
+		}
+		
+		function keyup(e) {
+			if (e.keyCode == 38 || e.keyCode == 40) {
+				paddleDY = 0;
+			}
+		}
+		
+		function writeMessage(mycontext, message, x, y){
+			initFont = mycontext.font;
+			initFillStyle = mycontext.fillStyle;
+			
+			context.font = "60pt Calibri";
+			mycontext.fillStyle = "white";
+			mycontext.fillText(message, x, y);
+			
+			mycontext.font = initFont;
+			mycontext.fillStyle = initFillStyle;
+		}
+	
+	</script>
+	
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	
+</body>
+</html>

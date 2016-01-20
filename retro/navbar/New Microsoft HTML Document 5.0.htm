@@ -1,0 +1,127 @@
+<HTML>
+<HEAD><TITLE>hi</TITLE>
+<STYLE TYPE="text/css">   
+   A:link	{ color:white; }
+         A:visited  { color:white; }  
+         A:hover  { color:white; }  
+         A:active  { color:white; }
+</STYLE>
+</HEAD>
+
+
+<BODY>
+
+
+<DIV ID='navi' style='position: absolute; left: -155'>
+<TABLE><TR><TD WIDTH='150' BACKGROUND='back3.jpg'><CENTER>
+<IMG SRC='main1.gif' name='m1'><BR>
+<IMG SRC='ss1.gif' name='s1'><BR>
+<IMG SRC='lay1.gif' name='la1'><BR>
+<IMG SRC='loc1.gif' name='l1'><BR>
+<IMG SRC='colour1.gif' name='co1'><BR>
+<IMG SRC='time.gif' name='t1'><BR>
+<IMG SRC='ran1.gif' name='r1'><BR>
+<IMG SRC='cook1.gif' name='c1'><BR>
+<IMG SRC='game1.gif' name='g1'><BR>
+
+
+</CENTER></TD><TD><A HREF='javascript:right()'><IMG SRC='greenled.gif' onClick='right()' BORDER=0><BR>
+<IMG SRC='toolbar1.gif' onClick='right()' BORDER=0></TD></TR></A>
+<TR><TD><IMG SRC='toolbot.gif' BORDER=0></TD></TR></TABLE></DIV>
+<CENTER><MAP NAME='homemap'><AREA SHAPE=RECT COORDS='246,3,326,84' HREF='index.htm'></MAP>
+<TABLE WIDTH='100'><TR><TD><IMG SRC='logo.gif' USEMAP='#homemap'></TD></TR></TABLE></CENTER>
+
+
+<SCRIPT>
+
+
+
+
+var dist = -155
+function right() {
+if (dist < -4) {
+right1()
+}
+else {
+left()
+}
+}
+
+
+function right1() {
+if (dist < -4) {
+dist += 4
+setTimeout("right1()", 5)
+check()
+}
+else {
+}
+}
+
+
+function left() {
+if (dist > -155) {
+dist -= 4
+setTimeout("left()", 5)
+check()
+}
+}
+
+function pos() {
+if (navigator.appName=="Netscape") {
+document.navi.top = (0 + pageYOffset)
+}
+else {
+navi.style.top = (0 + document.body.scrollTop)
+}
+setTimeout("pos()", 5)
+}
+
+function check() {
+if (navigator.appName=="Netscape") {
+document.navi.left = dist
+}
+else {
+navi.style.left = dist
+}
+}
+                                                                                                                                                     
+                                                                                                      
+
+
+if (document.images) {
+time1 = new Image
+time2 = new Image
+sis1 = new Image
+sis2 = new Image
+cook1 = new Image
+cook2 = new Image
+loca1 = new Image
+loca2 = new Image
+ran1 = new Image
+ran2 = new Image
+mai1 = new Image
+mai2 = new Image
+game1 = new Image
+game2 = new Image
+colour1 = new Image
+colour2 = new Image
+time1.src = 'time.gif'
+time2.src = 'time2.gif'
+sis1.src = 'ss1.gif'
+sis2.src = 'ss2.gif'
+cook1.src = 'cook1.gif'
+cook2.src = 'cook2.gif'
+loca1.src = 'loc1.gif'
+loca2.src = 'loc2.gif'
+ran1.src = 'ran1.gif'
+ran2.src = 'ran2.gif'
+mai1.src = 'main1.gif'
+mai2.src = 'main2.gif'
+colour1.src = 'colour1.gif'
+colour2.src = 'colour2.gif'
+game1.src = 'game1.gif'
+game2.src = 'game2.gif'
+} 
+setTimeout("pos()", 5)
+</SCRIPT>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Simon</title>
+    
+    
+    
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <link href='https://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'>
+
+<div class="game">
+  <div class="content">
+
+    <div class="outerCircle">
+    </div>
+
+  </div>
+
+  <div class="innerCircle">
+    <div class="middlecontainer">
+      <h3>Simon<sup style="font-size:30px; font-weight:normal">&reg;</sup></h3>
+    <form id="controlForm" action="">
+      
+      <div class="btncontainer">
+        <input class="control countdisplay" id="counter"><br>
+        <label class="hidebox" for="btnstart">Count</label>
+      </div>
+      
+      <div class="btncontainer">
+        <button type="button" class="control controlbutton" id="btnstart"></Button><br>
+        <label for="btnstart">Start</label>
+      </div>
+        
+      <div class="btncontainer">
+        <button type="button" class="control controlbutton off" id="btnstrict"></Button><br>
+        <label for="btnstrict">Strict</label>
+      </div>
+      
+      <div class="togglecontainer">
+        <span class="toggletext">OFF</span>
+        <div class="togglearea">
+          <button type="button" class="togglebtn pull-left"></button>
+        </div>
+        <span class="toggletext">ON</span>
+      </div>
+      
+    </form>
+    </div>
+  </div>
+
+  <div class="simonbtn btngreen darkgreen" id="green"></div>
+  <div class="simonbtn btnred darkred" id="red"></div>
+  <div class="simonbtn btnblue darkblue" id="blue"></div>
+  <div class="simonbtn btnyellow darkyellow" id="yellow"></div>
+
+</div>
+<div class="debug">Beat stage 20 to win</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+          <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-18264723-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+    
+  </body>
+</html>

@@ -1,0 +1,340 @@
+<html>
+<head>
+<title>Game of Life - Canvas</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<style>
+
+body {
+    color: white;
+    text-align: center;
+}
+
+#container {
+    text-align: center;
+    margin: 0px 10%;
+}
+
+#gameContainer {
+    float:left;
+}
+
+#myCanvas {
+    width:800px;
+    height:800px;
+    float:left;
+}
+
+#controls {
+    float:right;
+    background: #c0c0c0;
+    border-radius: 50px;
+    padding: 10px;
+    margin: 20px;
+     -webkit-transition: border-radius .4s; /* Safari */
+    transition: border-radius .4s;
+}
+
+#controls:hover {
+    border-radius: 0px;
+    box-shadow: 0px 0px 10px 10px #0000ff;
+}
+
+</style>
+</head>
+<body bgcolor="black">
+
+   
+    <div id="container">
+        <div id="gameContainer">
+            <canvas id="myCanvas">Error - No Support</canvas>
+        </div>
+
+        <div id = "controls">
+            <h2> 
+                Space = Pause / Resume <br />
+                r = clear grid <br />
+                p = populate <br />
+                right arrow to step <br / >
+                Click and drag to draw and erase <br />
+                g for gridlines.
+            </h2>
+
+            <form id="myForm">
+                <label for="crow">Rows: 
+                    <input type="range" min="5" max="50" value="20" id="crow">
+                    <div id="displayRow"></div>
+                </label>
+
+                <label for="ccol">Cols: 
+                    <input type="range" min="5" max="50" value="20" id="ccol">
+                    <div id="displayCol"></div>
+                </label>
+            </form>
+
+            <img width="64" height="64" src="../volv.gif" />
+
+        </div>
+
+    </div>
+
+    
+    <script>
+        
+    (function () {
+        "use strict";        
+
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+
+        canvas.width=800;
+        canvas.height=800;
+
+        var rows=20;
+        var cols=20;
+        var boxw = canvas.width/cols;
+        var boxh = canvas.height/rows;
+
+        var gameGrid = createTestGrid(false); //Not empty. Filled with randomness
+
+        var timer = 0;
+        var paused = false;
+        var doGridLines = true;
+
+        var drawOrErase = 0;           
+
+        function createTestGrid(make_empty) {
+            var testGrid = [];
+
+            for (var i=0; i<cols; i++) {
+                testGrid[i] = [];
+                for (var j=0; j<rows; j++) {
+                    testGrid[i][j] = (make_empty) ? 0 : Math.round(rndNo(1));
+                }
+            }
+
+            return testGrid;
+        }
+
+        function gridLines() {
+            context.lineWidth = 1;
+            context.strokeStyle = "black";
+            
+            for (var i = 0; i < rows; i++) {
+                context.beginPath();
+                    context.moveTo(0, i*boxh);
+                    context.lineTo(canvas.width, i*boxh);
+                context.stroke();
+            }
+
+            for (var i = 0; i < cols; i++) {
+                context.beginPath();
+                    context.moveTo(i*boxw, 0);
+                    context.lineTo(i*boxw, canvas.height);
+                context.stroke();
+            }
+        }
+
+        function drawGrid(grid) {
+            context.fillStyle = "blue";
+            for (var i=0; i<grid.length; i++) {
+                for (var j=0; j<grid[i].length; j++) {
+                    if (grid[i][j])
+                        context.fillRect(i*boxw, j*boxh, boxw, boxh);
+                }
+            }
+        }
+
+        function countNeighbours(grid) {
+            var count;
+            var nO = [ // Neighbour Offsets
+                [-1, -1], [-1, 0], [-1, +1],
+                [ 0, -1],          [ 0, +1],
+                [+1, -1], [+1, 0], [+1, +1]
+            ];
+            var newGrid = createTestGrid(true); //Store new values without effecting old
+
+            for (var i=0; i<grid.length; i++) {
+                for (var j=0; j<grid[i].length; j++) {
+                    //For each offset.
+                    count = 0;
+                    for (var k = 0; k < nO.length; k++) {
+                        //Check Bounds
+                        var neighx = i + nO[k][0]; // X
+                        var neighy = j + nO[k][1]; // Y
+                        if (
+                            (neighx >= 0) && (neighx < grid.length) &&
+                            (neighy >= 0) && (neighy < grid[i].length) 
+                            ) {
+
+                            //Check status
+                            if (grid[neighx][neighy])
+                                count++;
+
+                        }
+
+                    } // End Count
+
+                    //Live or Die
+                    if (alive(grid[i][j])) {
+                        if (count < 2)                    { newGrid[i][j] = 0; }
+                        if ((count == 2) || (count == 3)) { newGrid[i][j] = 1; }
+                        if (count > 3)                    { newGrid[i][j] = 0; }
+                    }
+                    else {
+                        newGrid[i][j] = (count == 3) ? 1 : 0;
+                    }
+
+                }
+            }
+
+            return newGrid;
+
+        }
+
+
+        function alive(box) {
+            if (box==1) 
+                return true;
+            
+            return false;
+        }
+        
+        function rndNo(range) {
+            return Math.random()*range;
+        }
+
+        canvas.addEventListener("mousedown", function mouseDown(e) {
+            var hitX = Math.floor(e.offsetX/boxw);
+            var hitY = Math.floor(e.offsetY/boxh);
+            
+            gameGrid[hitX][hitY] = gameGrid[hitX][hitY] ? 0 : 1;
+            drawOrErase = gameGrid[hitX][hitY];
+
+            draw();
+            console.log(e);
+        });
+
+        canvas.addEventListener("mousemove", function mouseMove(e) {
+            var hitX = Math.floor(e.offsetX/boxw);
+            var hitY = Math.floor(e.offsetY/boxh);
+
+            if (e.buttons==1) 
+                gameGrid[hitX][hitY] = drawOrErase ? 1 : 0;
+
+            draw();
+        });
+
+        //a = 65
+        //<- == 37 
+        document.addEventListener("keydown", function(e) {
+            switch(e.keyCode){
+                case 32: // Space Pause / resume
+                    if (timer) {
+                        clearTimeout(timer);
+                        timer = 0;
+                        paused = true;
+                        draw();
+                    }
+                    else {
+                        paused = false;
+                        advance();
+                    }
+                    break;
+                case 39: // Right arrow - One step
+                    gameGrid = countNeighbours(gameGrid);
+                    draw();
+                    break;
+                case 82: // r - Reset to empty grid.
+                    gameGrid = createTestGrid(true);
+                    draw();
+                    break;
+                case 80: // p - Populate.
+                    gameGrid = createTestGrid(false);
+                    draw();
+                    break;
+                case 71: // g - Toggle grid.
+                    doGridLines = !doGridLines;
+                    draw();
+                    break;
+                case 76: // l 
+                    console.log(JSON.stringify(gameGrid));
+                    break;
+            }
+        });
+
+
+
+        function draw() {
+            context.fillStyle = "#c0c0c0";
+            
+            context.clearRect(0,0,canvas.width,canvas.height);
+            context.fillRect(0,0,canvas.width,canvas.height);
+
+            if (paused) {
+                context.strokeStyle = "blue";
+                context.lineWidth = 5;
+                context.strokeRect(0, 0, canvas.width, canvas.height);
+            }
+
+            if (doGridLines) gridLines();
+            drawGrid(gameGrid);      
+        }
+        
+        function advance() {
+            gameGrid = countNeighbours(gameGrid);
+            draw();
+            if (!paused) {
+                timer =  setTimeout(advance, 100);
+            }
+        }
+
+        advance();
+
+        // Manage sliders
+
+        var sliderRow = document.getElementById("crow");
+        var sliderCol = document.getElementById("ccol");
+        var rowOut = document.getElementById(("displayRow"));
+        var colOut = document.getElementById(("displayCol"));
+
+        rowOut.innerHTML = sliderRow.value;
+        colOut.innerHTML = sliderCol.value;
+
+        myForm.addEventListener("input", function() {  // Sooo hacky - kill variables instead of writing proper init andd such
+            rowOut.innerHTML = sliderRow.value;
+            colOut.innerHTML = sliderCol.value;
+
+            rows=sliderRow.value;
+            cols=sliderCol.value;
+            boxw = canvas.width/cols;
+            boxh = canvas.height/rows;
+
+            gameGrid = createTestGrid(true); //Empty
+
+            clearTimeout(timer);
+            timer = 0;
+            paused = true;
+            draw();
+        } );
+
+    })();
+    
+    </script>
+
+
+
+<script>
+/* jshint ignore:start */
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18264723-1', 'auto');
+  ga('send', 'pageview');
+/* jshint ignore:end */
+</script>
+
+
+</body>
+</html>

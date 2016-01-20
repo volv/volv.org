@@ -1,0 +1,86 @@
+body {
+  background: center fixed;
+  background-color: #e0e0e0;;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.outercontainer {
+  width:90%;
+}
+
+h1, h3 {
+  color: white;
+  font-weight: bold;
+}
+
+.main {
+  margin-top: 20px!important;
+  border-radius: 10px;
+  background: rgba(100, 100, 255, 0.8);
+  max-width: 800px!important;
+  min-width: 250px;
+  margin-bottom:100px!important;
+}
+topline {
+  
+}
+.temp {
+  font-size:40px;
+  color:black
+}
+
+.temp:hover {
+  color:rgba(200, 150, 000, 1);
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+.temp:active {
+  box-shadow: 1px 1px 1px 1px silver;
+}
+
+.icon {
+  
+}
+
+.tmppic {
+  height: 70px;
+  margin-bottom:10px;
+}
+
+.bottomline {
+  margin-top: -10px;
+}
+
+.detailbox {
+  background: rgba(200, 200, 200, .6);
+  border:solid none;
+  border-radius:50px;
+  padding:10px 30px 10px 30px!important;
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.3);
+  margin-bottom:10px;
+  font-size:18px;  
+}
+.loc {
+  text-align: left;
+}
+#citation {
+  padding-top:0px;
+  padding-bottom:0px;
+  margin-bottom:-15px;
+  margin-top:0px;
+  font-size:12px;
+  text-align: right;
+  opacity: 0.5;
+  color:black;
+}
+
+#citation a {
+  color:black;
+  font-weight:bold;
+}
+
+#error {
+  color:white;
+  font-size:30px;
+}
