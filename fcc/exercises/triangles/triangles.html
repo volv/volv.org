@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate">
+
+
+    <title>CodePen - Nested Loops</title>
+    
+    
+    
+    
+        <style>
+      
+body {
+  background: rgba(0, 100, 200, .5);
+  font-family: "Lucida Console", Monaco, monospace
+}
+.debug {
+  background: rgba(0, 100, 200, .5);
+  font-size:30px;
+  border: solid black 5px;
+  color: white;
+  width:80vw;
+  margin:10px auto;
+  padding: 5px;
+}
+
+
+    </style>
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <div id="debug" class="debug"></div>
+    
+    
+        <script>
+      var volv$ = function (x) { return document.getElementById(x); };
+var css = "color:blue; font-size: 2.5vh";
+
+function outFunc(str) {
+  console.log("%c" +str, css);
+  volv$("debug").innerHTML += str.replace(/\s/g, "&nbsp;") + "<br>"; 
+}
+
+function makeTriangle1(lines, callback) {
+  for (var i=1; i<=lines; i++) {
+    var result = "";
+    for (var j=1; j<=lines; j++) {
+      result += (j<=lines-i) ? " " : i;    
+    }
+    callback(result);
+  }
+}
+
+outFunc("//makeTriangle1(6)");
+makeTriangle1(6, outFunc);
+
+function makeTriangle2(lines, callback) {
+  for (var i=1; i<=lines; i++) {
+    var result = "";
+    for (var j=1; j<=lines-i; j++) {
+      result += " ";
+    }
+    
+    for (var j=1; j<=i*2-1; j++) {
+      result += i.toString();
+    }
+    callback(result);
+  }
+}
+
+outFunc("");
+outFunc("//makeTriangle2(3)");
+makeTriangle2(3, outFunc);
+
+function makeTriangle3(lines, callback) {
+  lines = (lines % 2 === 0) ? lines+1 : lines; //Use next odd number if not odd
+  var half = Math.floor(lines/2) + 1;
+
+  for (var i=1; i<=lines; i++) {
+    var result = "";
+    if (i < half) {
+      for (var j=half; j > i; j--) {
+        result += " ";
+      } 
+      for (var j=0; j < i; j++) {
+        result += i;
+      }  
+    }
+    if (i === half) {
+      for (var j=0; j < i; j++) {
+        result += i;
+      }
+    }
+    if (i > half) {
+      for (var j=half; j < i; j++) {
+        result += " ";
+      } 
+      for (var j=i; j <= lines; j++) {
+        result += i;
+      }
+    }
+    callback(result);
+  }
+}
+
+outFunc("");
+outFunc("//makeTriangle3(6)");
+makeTriangle3(6, outFunc);
+
+// String.repeat() ftw
+// function makeTriangle2(lines) {
+//   for (var i=1; i<=lines; i++) {
+//     var result = "";
+//     result += " ".repeat(lines-i);
+//     result += i.toString().repeat(i*2-1);
+//     console.log("%c" +result, css);
+//   }
+// }
+      //@ sourceURL=pen.js
+    </script>
+
+    
+    
+    
+  </body>
+</html>
+ 
